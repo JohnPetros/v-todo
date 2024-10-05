@@ -1,0 +1,16 @@
+{
+  "name": "node-express-web",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/index.js",
+  "scripts": {
+    "dev": "node --watch src",
+    "start": "node src"
+  },
+  "author": "John Petros",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.21.0"
+  }
+}

@@ -1,0 +1,57 @@
+/* color palette from <https://github.com/vuejs/theme> */
+:root {
+  /* Primary */
+  --primary-bright-blue: hsl(220, 98%, 61%);
+  --primary-check-background: linear-gradient(hsl(192, 100%, 67%), hsl(280, 87%, 65%));
+
+  /* Neutral */
+
+  /* Light Theme */
+  --light-theme-very-light-gray: hsl(0, 0%, 98%);
+  --light-theme-very-light-grayish-blue: hsl(236, 33%, 92%);
+  --light-theme-light-grayish-blue: hsl(233, 11%, 84%);
+  --light-theme-dark-grayish-blue: hsl(236, 9%, 61%);
+  --light-theme-very-dark-grayish-blue: hsl(235, 19%, 35%);
+
+  /* Dark Theme */
+  --dark-theme-very-dark-blue: hsl(235, 21%, 11%);
+  --dark-theme-very-dark-desaturated-blue: hsl(235, 24%, 19%);
+  --dark-theme-light-grayish-blue: hsl(234, 39%, 85%);
+  --dark-theme-light-grayish-blue-hover: hsl(236, 33%, 92%);
+  --dark-theme-dark-grayish-blue: hsl(234, 11%, 52%);
+  --dark-theme-very-dark-grayish-blue: hsl(233, 14%, 35%);
+  --dark-theme-very-dark-grayish-blue-brighter: hsl(237, 14%, 26%);
+}
+
+/* semantic color variables for this project */
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-background: var(--vt-c-black);
+    --color-background-soft: var(--vt-c-black-soft);
+    --color-background-mute: var(--vt-c-black-mute);
+
+    --color-border: var(--vt-c-divider-dark-2);
+    --color-border-hover: var(--vt-c-divider-dark-1);
+
+    --color-heading: var(--vt-c-text-dark-1);
+    --color-text: var(--vt-c-text-dark-2);
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  font-weight: normal;
+}
+
+body {
+  min-height: 100vh;
+  font-family: "Josefin Sans", sans-serif;
+  font-optical-sizing: auto;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}

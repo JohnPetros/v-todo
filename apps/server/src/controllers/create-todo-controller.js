@@ -9,6 +9,7 @@ export class CreateTodoController {
     }
 
     const createdTodo = database.addTodo(request.body)
+
     return response.json(createdTodo)
   }
 }

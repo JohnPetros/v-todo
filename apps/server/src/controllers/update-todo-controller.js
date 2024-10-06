@@ -9,6 +9,11 @@ export class UpdateTodoController {
       return responsestatus(404).json({ message: 'Tarefa não encontrada' })
     }
 
+    if (!request.body.name) {
+      console.log("OI")
+      return response.status(400).json({ message: 'Tarefa não pode ter nome vazio' })
+    }
+
     todo = database.findTodoByName(request.body.name)
 
     if (todo) {
@@ -16,6 +21,7 @@ export class UpdateTodoController {
     }
 
     const updatedTodo = database.updateTodo(request.body)
+    console.log({ updatedTodo })
     return response.json(updatedTodo)
   }
 }

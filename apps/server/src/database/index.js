@@ -11,7 +11,6 @@ export class Database {
   }
 
   findAllUnDoneTodos() {
-    console.log(this.todos.filter((todo) => !todo.isDone))
     return this.todos.filter((todo) => !todo.isDone)
   }
 
@@ -30,9 +29,10 @@ export class Database {
   }
 
   updateTodo(todo) {
-    this.todos = this.todos.filter((currentTodo) =>
-      currentTodo.id === todo.id ? todo : currentTodo,
+    this.todos = this.todos.map((currentTodo) =>
+      currentTodo.id === Number(todo.id) ? todo : currentTodo,
     )
+    return todo
   }
 
   removeTodo(todoId) {
@@ -40,4 +40,11 @@ export class Database {
   }
 }
 
-export const database = new Database() 
+
+const database = new Database()
+
+database.addTodo({ name: 'Estudar desenvolvimento bbbb', isDone: false })
+database.addTodo({ name: 'Fazer exercício', isDone: false })
+database.addTodo({ name: 'Revisar backlog', isDone: false })
+
+export { database }

@@ -1,15 +1,50 @@
 <template>
   <div class="todo-container">
     <div class="input-container">
-      <Checkbox :id="id" :is-default-checked="isDone" />
-      <input type="text" :value="name" readonly autofocus class="input" />
+      <Checkbox
+        :id="id"
+        :is-default-checked="isDone"
+        @change="handleCheckboxChange"
+      />
+      <input
+        type="text"
+        v-model="todoName"
+        :readonly="!isUpdatingEnable"
+        :class="{
+          input: true,
+          isDone: this.isDone && !isUpdatingEnable,
+          updatable: isUpdatingEnable,
+        }"
+        :autofocus="isUpdatingEnable"
+      />
     </div>
 
     <div class="buttons">
-      <button type="submit" aria-label="criar tarefa" class="button">
+      <button
+        v-show="isUpdatingEnable"
+        type="submit"
+        aria-label="criar tarefa"
+        @click="handleUpdate"
+        class="button"
+      >
+        <i class="ph-bold ph-check"></i>
+      </button>
+      <button
+        v-show="!isUpdatingEnable"
+        type="submit"
+        aria-label="criar tarefa"
+        @click="handleUpdateEnable"
+        class="button"
+      >
         <i class="ph-bold ph-pencil"></i>
       </button>
-      <button type="submit" aria-label="criar tarefa" class="button">
+      <button
+        v-show="!isUpdatingEnable"
+        type="submit"
+        aria-label="criar tarefa"
+        @click="$emit('delete', id)"
+        class="button"
+      >
         <i class="ph-bold ph-x"></i>
       </button>
     </div>
@@ -17,19 +52,48 @@
 </template>
 
 <script>
-import Checkbox from './checkbox.vue';
+import Checkbox from "./checkbox.vue";
 
 export default {
-  name: 'Todo',
+  name: "Todo",
+  emits: ["update", "update:status", "delete"],
   props: {
     id: String,
     name: String,
-    isDone: Boolean
+    isDone: Boolean,
   },
   components: {
-    Checkbox
-  }
-}
+    Checkbox,
+  },
+  data() {
+    return {
+      todoName: this.name,
+      isUpdatingEnable: false,
+    };
+  },
+  methods: {
+    handleCheckboxChange(isTodoDone) {
+      this.$emit("update:status", this.id, isTodoDone);
+    },
+    handleNameInputChange(event) {
+      this.todoName = event.currentTarget.value;
+    },
+    handleUpdateEnable() {
+      this.isUpdatingEnable = true;
+    },
+    handleUpdate() {
+      this.isUpdatingEnable = false;
+
+      if (this.todoName === this.name) return;
+
+      this.$emit("update", {
+        id: this.id,
+        name: this.todoName,
+        isDone: this.isDone,
+      });
+    },
+  },
+};
 </script>
 
 <style scoped>
@@ -53,7 +117,7 @@ export default {
 }
 
 .input {
-  flex: 1;
+  width: 24rem;
 
   background-color: transparent;
   outline: none;
@@ -62,6 +126,17 @@ export default {
   font-size: 1rem;
   font-weight: 500;
   color: var(--light-theme-dark-grayish-blue);
+
+  padding: 8px;
+  border-radius: 8px;
+}
+
+.input.isDone {
+  text-decoration: line-through;
+}
+
+.input.updatable {
+  border: 1px solid var(--light-theme-dark-grayish-blue);
 }
 
 .buttons {

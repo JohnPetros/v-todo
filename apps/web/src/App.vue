@@ -13,14 +13,45 @@
 
     <ul v-if="!isLoading" class="todos-list">
       <li v-for="todo in todos" :key="todo.id">
-        <Todo :id="todo.id" :name="todo.name" :is-done="todo.isDone" />
+        <Todo
+          :id="todo.id"
+          :name="todo.name"
+          :is-done="todo.isDone"
+          @delete="handleDeleteTodo"
+          @update="handleUpdateTodo"
+          @update:status="handleUpdateTodoStatus"
+        />
       </li>
       <li class="todo-list-footer">
         <p class="todos-count">{{ todos.length }} tarefas</p>
         <div>
-          <button class="filter-button active">Todos</button>
-          <button class="filter-button">Concluídas</button>
-          <button class="filter-button">Não concluídas</button>
+          <button
+            :class="{
+              'filter-button': true,
+              active: this.activeFilter === 'all',
+            }"
+            @click="() => handleListTodosFilter('all')"
+          >
+            Todos
+          </button>
+          <button
+            :class="{
+              'filter-button': true,
+              active: this.activeFilter === 'done',
+            }"
+            @click="() => handleListTodosFilter('done')"
+          >
+            Concluídas
+          </button>
+          <button
+            :class="{
+              'filter-button': true,
+              active: this.activeFilter === 'undone',
+            }"
+            @click="() => handleListTodosFilter('undone')"
+          >
+            Não concluídas
+          </button>
         </div>
       </li>
     </ul>
@@ -44,8 +75,12 @@ export default {
     Spinner,
   },
   methods: {
-    async listTodos() {
-      const response = await fetch("http://localhost:3000/tarefas");
+    async listTodos(queryParam = "") {
+      this.isLoading = true;
+
+      const response = await fetch(
+        `http://localhost:3000/tarefas${queryParam}`
+      );
       const data = await response.json();
       this.todos = data;
       this.isLoading = false;
@@ -53,6 +88,63 @@ export default {
 
     async handleCreateTodo(todo) {
       this.todos.push(todo);
+    },
+
+    async handleUpdateTodo(todo) {
+      const response = await fetch(`http://localhost:3000/tarefas/${todo.id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(todo),
+      });
+
+      if (!response.ok) {
+        const data = await response.json();
+        this.handleShowError(data.message);
+      }
+
+      await this.listTodos();
+    },
+
+    async handleUpdateTodoStatus(todoId, isTodoDone) {
+      const response = await fetch(
+        `http://localhost:3000/tarefas/status/${todoId}`,
+        {
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ isDone: isTodoDone }),
+        }
+      );
+
+      if (!response.ok) {
+        const data = await response.json();
+        this.handleShowError(data.message);
+      }
+
+      await this.listTodos();
+    },
+
+    async handleDeleteTodo(todoId) {
+      await fetch(`http://localhost:3000/tarefas/${todoId}`, {
+        method: "DELETE",
+      });
+
+      await this.listTodos();
+    },
+
+    async handleListTodosFilter(activeFilter) {
+      switch (activeFilter) {
+        case "all":
+          await this.listTodos();
+          this.activeFilter = "all";
+          break;
+        case "done":
+          await this.listTodos("?status=true");
+          this.activeFilter = "done";
+          break;
+        case "undone":
+          await this.listTodos("?status=false");
+          this.activeFilter = "undone";
+      }
     },
 
     handleShowError(errorMessage) {
@@ -73,6 +165,7 @@ export default {
       todos: [],
       errorMessage: "",
       isLoading: true,
+      activeFilter: "all",
     };
   },
 

@@ -1,5 +1,3 @@
-# Todox
-
 <h1 align="center">V-Todo</h1>
 
 <div align="center">
@@ -23,6 +21,7 @@
 
 **V-Todo** é app de lista de tarefas simples, ou seja, é possível adicionar, remover e atualizar uma tarefa, bem como é possível filtrar as tarefas por status de conclusão. Esse projeto foi realizado com o intuito de aprender os conceitos básicos de desenvolvimento web com [Vue](https://vuejs.org/).
 
+---
 
 ## 📖 Guia de instalação
 
@@ -58,6 +57,8 @@ npm run dev
 > O Frontend estará rodando em `http://localhost:3000`
 > O Backend estará rodando em `http://localhost:3333`
 
+---
+
 ## 🛣 Rotas do backend
 
 |                                                                    Tipo | Rota `/task`                         | Ação                            |
@@ -68,6 +69,7 @@ npm run dev
 | [![](https://img.shields.io/badge/PATCH-F48F43?style=for-the-badge)]()  | `/tarefas/status/:id`                | Atualiza o status de uma tarefa |
 | [![](https://img.shields.io/badge/DELETE-CD853F?style=for-the-badge)]() | `/tarefas/:id`                       | Deleta uma tarefa               |
 
+---
 
 <p align="center">
   Made with 💜 by John Petros 👋🏻

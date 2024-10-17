@@ -109,6 +109,11 @@ export default {
   padding: 1rem;
 }
 
+.dark .todo-container {
+  background-color: var(--dark-theme-very-dark-desaturated-blue);
+  border-bottom-color: var(--light-theme-very-dark-grayish-blue);
+}
+
 .input-container {
   display: flex;
   align-items: center;

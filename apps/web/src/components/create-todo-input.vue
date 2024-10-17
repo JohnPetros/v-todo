@@ -76,6 +76,10 @@ export default {
   padding: 1rem;
 }
 
+.dark .container {
+  background-color: var(--dark-theme-very-dark-desaturated-blue);
+}
+
 .status-label {
   color: var(--light-theme-very-light-gray);
   font-size: 1.2rem;

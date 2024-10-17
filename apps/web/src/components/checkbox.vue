@@ -1,6 +1,12 @@
 <template>
   <label :for="id" class="label">
-    <input :id="id" v-model="isChecked" @change="$emit('change', isChecked)" type="checkbox" class="input" />
+    <input
+      :id="id"
+      v-model="isChecked"
+      @change="$emit('change', isChecked)"
+      type="checkbox"
+      class="input"
+    />
     <span class="background"></span>
     <i class="indicator ph-bold ph-check"></i>
   </label>
@@ -8,18 +14,18 @@
 
 <script>
 export default {
-  name: 'Checkbox',
-  emits: ['change'],
+  name: "Checkbox",
+  emits: ["change"],
   props: {
     id: String,
-    isDefaultChecked: Boolean
+    isDefaultChecked: Boolean,
   },
   data() {
     return {
-      isChecked: this.isDefaultChecked
-    }
-  }
-}
+      isChecked: this.isDefaultChecked,
+    };
+  },
+};
 </script>
 
 <style scoped>
@@ -29,7 +35,7 @@ export default {
 }
 
 .input {
-  display: none
+  display: none;
 }
 
 .background {
@@ -38,14 +44,16 @@ export default {
   width: 1.6rem;
   height: 1.6rem;
 
-  border: 1px solid var(--light-theme-light-grayish-blue);
+  border: 1px solid var(--light-theme-very-dark-grayish-blue);
 }
 
-input:checked+.background {
+input:checked + .background {
   background: var(--check-background);
 }
 
 .indicator {
+  display: none;
+
   position: absolute;
   top: 50%;
   left: 50%;
@@ -53,5 +61,9 @@ input:checked+.background {
 
   color: var(--light-theme-very-light-gray);
   font-size: 1rem;
+}
+
+input:checked ~ .indicator {
+  display: block;
 }
 </style>

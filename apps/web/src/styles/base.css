@@ -73,3 +73,7 @@ button {
 ul {
   list-style: none;
 }
+
+body:has(.dark) {
+  background-color: var(--dark-theme-very-dark-blue);
+}

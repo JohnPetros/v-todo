@@ -1,7 +1,20 @@
 <template>
-  <main class="container">
-    <img src="/images/bg-desktop-light.jpg" alt="" class="background" />
-    <h1 class="title">V-Todo</h1>
+  <main :class="{ container: true, dark: isDarkTheme }">
+    <img
+      v-if="isDarkTheme"
+      src="/images/bg-desktop-dark.jpg"
+      alt=""
+      class="background"
+    />
+    <img v-else src="/images/bg-desktop-light.jpg" alt="" class="background" />
+
+    <header>
+      <h1 class="title">V-Todo</h1>
+      <button type="button" @click="handleSwitchTheme" class="theme-button">
+        <img v-if="isDarkTheme" src="/images/icon-sun.svg" alt="Thema claro" />
+        <img v-else src="/images/icon-moon.svg" alt="Thema escuro" />
+      </button>
+    </header>
 
     <CreateTodoInput @create="handleCreateTodo" @error="handleShowError" />
 
@@ -147,6 +160,10 @@ export default {
       }
     },
 
+    handleSwitchTheme() {
+      this.isDarkTheme = !this.isDarkTheme;
+    },
+
     handleShowError(errorMessage) {
       this.errorMessage = errorMessage;
 
@@ -165,6 +182,7 @@ export default {
       todos: [],
       errorMessage: "",
       isLoading: true,
+      isDarkTheme: false,
       activeFilter: "all",
     };
   },
@@ -180,6 +198,16 @@ main.container {
   max-width: 560px;
   margin: 0 auto;
   padding: 6rem 0;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.theme-button {
+  background-color: transparent;
 }
 
 .background {
@@ -223,7 +251,13 @@ main.container {
   align-items: center;
   justify-content: space-between;
 
+  background-color: var(--light-theme-very-light-gray);
+
   padding: 1.2rem;
+}
+
+.dark .todo-list-footer {
+  background-color: var(--dark-theme-very-dark-desaturated-blue);
 }
 
 .todos-count {
